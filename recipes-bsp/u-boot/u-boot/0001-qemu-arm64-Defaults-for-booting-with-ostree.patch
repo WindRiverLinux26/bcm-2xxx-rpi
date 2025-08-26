@@ -1,4 +1,4 @@
-From 2d6158f34461bdf6e92caef86ba25dd9dd00eaa4 Mon Sep 17 00:00:00 2001
+From 625632f0851ca76fd040942f1d1e5ff653f84e30 Mon Sep 17 00:00:00 2001
 From: Jason Wessel <jason.wessel@windriver.com>
 Date: Tue, 23 Nov 2021 16:21:30 +0800
 Subject: [PATCH] qemu-arm64: Defaults for booting with ostree
@@ -36,10 +36,10 @@ index fb4adef2..1be97ab6 100644
  pxefile_addr_r=0x40300000
  kernel_addr_r=0x40400000
 diff --git a/configs/qemu_arm64_defconfig b/configs/qemu_arm64_defconfig
-index 088ba39f..efcf4aa6 100644
+index 39afb837..894b25c4 100644
 --- a/configs/qemu_arm64_defconfig
 +++ b/configs/qemu_arm64_defconfig
-@@ -35,6 +35,9 @@ CONFIG_CMD_MTD=y
+@@ -36,6 +36,9 @@ CONFIG_CMD_MTD=y
  CONFIG_CMD_PCI=y
  CONFIG_CMD_EFIDEBUG=y
  CONFIG_CMD_TPM=y
@@ -47,8 +47,8 @@ index 088ba39f..efcf4aa6 100644
 +CONFIG_CMD_BOOTMENU=y
 +CONFIG_PREBOOT="test -n ${fdtcontroladdr} && setenv fdt_addr ${fdtcontroladdr}"
  CONFIG_CMD_MTDPARTS=y
+ CONFIG_CMD_SPAWN=y
  CONFIG_ENV_IS_IN_FLASH=y
- CONFIG_SCSI_AHCI=y
 -- 
-2.35.5
+2.48.1
 
