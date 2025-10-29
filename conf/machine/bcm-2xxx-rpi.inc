@@ -15,7 +15,7 @@ KERNEL_IMAGETYPES = "Image.gz Image"
 SERIAL_CONSOLE = "115200 ttyS0"
 
 # wic
-IMAGE_FSTYPES += "tar.bz2 wic wic.bmap ext4"
+IMAGE_FSTYPES += "tar.bz2 wic wic.bmap ext4.zst"
 WKS_FILE ?= "bcm-2xxx-rpi-sdimage.wks"
 do_image_wic[depends] += "mtools-native:do_populate_sysroot dosfstools-native:do_populate_sysroot"
 do_image_wic[depends] += "u-boot:do_deploy"
