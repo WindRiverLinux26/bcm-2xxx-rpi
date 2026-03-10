@@ -195,6 +195,20 @@ The microcode is typically installed in /lib/firmware/brcm.
 5.2 Usage and verification
 --------------------------
 
+For Raspberrypi5
+----------------
+
+The bcm43455 RaspberryPi5 firmware is provided by the linux-firmware-rpidistro
+package. As this firmware is governed by a third-party license, please ensure
+you add the following configuration steps to your local.conf file.
+Note that wrlinux does not include this firmware by default.
+
+  CUSTOMER_RECIPES:raspberrypi += 'linux-firmware-rpidistro'
+  LICENSE_FLAGS_ACCEPTED = "synaptics-killswitch"
+  MACHINE_EXTRA_RRECOMMENDS += "\
+      linux-firmware-rpidistro-bcm43455 \
+  "
+
 Execute the following commands to validate the WIFI eature:
 
 	# ifconfig wlan<idx> up
@@ -273,9 +287,21 @@ Verify with below command
 8.2 Audio playback(HDMI)
 ------------------------
 
+For Raspberrypi4
+----------------
+
 Verify with below command
 
 	# speaker-test -c2 -twav -Dhw:0,1
+
+For Raspberrypi5
+----------------
+
+	speaker-test -c2  -Dhdmi:CARD=vc4hdmi{number},DEV=0
+
+Note: If you are using aplay to play a WAV file, please add -f IEC958_SUBFRAME_LE, for example:
+
+	aplay -f IEC958_SUBFRAME_LE Noise.wav
 
 Note:
 The following command is used to switch the audio output
@@ -297,9 +323,27 @@ device, the config.txt should contain:
 
 gpu_mem could select others value like 256 or 512.
 
+For Raspberrypi4
+----------------
+
 To run camera test case with below commands:
 # export DISPLAY=:0
 # gst-launch-1.0 v4l2src device=/dev/video0 ! video/x-raw,format=YUY2,width=320,height=240 ! videoconvert ! autovideosink
+
+For Raspberrypi5
+----------------
+
+Note:
+'camera_auto_detect=1' only applies to cameras sold by RPI.
+It does not recognize other third-party cameras; we need to
+manually set the overlay, for example:
+
+    dtoverlay=imx219,cam1
+    dtoverlay=ov5647,cam0
+
+cam -l
+
+cam --camera 1 --stream width=640,height=480,pixelformat=SBGGR12 --capture=20 --file=picture.raw
 
 10. SPI and I2C
 ===============
@@ -328,7 +372,15 @@ The following description show how to verify graphics feature.
 
 Detail command as below:
 
+For Raspberrypi4
+----------------
+
 	# <path-of-wrlinux-x>/setup.sh --machine bcm-2xxx-rpi4 --distro wrlinux-graphics --dl-layers --all-layers --accept-eula=yes
+
+For Raspberrypi5
+----------------
+
+	# <path-of-wrlinux-x>/setup.sh --machine bcm-2xxx-rpi5 --distro wrlinux-graphics --dl-layers --all-layers --accept-eula=yes
 
 11.2 Build Image
 ----------------
@@ -380,9 +432,8 @@ To enable LCD feature, it needs to add below configuration parameter in config.t
 	For HDMI LCD Display-C:
 	hdmi_cvt 1024 600 60 6 0 0 0
 
-
-13. Boot From USB Disk
-======================
+13. Boot From USB Disk(Only Raspberry Pi4)
+==========================================
 
 The latest Raspberry pi firmware supports for booting system from USB 3.0 Disk.
 The detail boot command as below:
