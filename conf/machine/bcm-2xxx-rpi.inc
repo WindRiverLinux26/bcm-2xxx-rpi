@@ -74,6 +74,8 @@ RPI_KERNEL_DEVICETREE_OVERLAYS ?= " \
     overlays/ov5647.dtbo \
     overlays/imx219.dtbo \
     overlays/vc4-kms-v3d-pi5.dtbo  \
+    overlays/overlay_map.dtb \
+    overlays/bcm2712d0.dtbo \
 "
 
 def make_dtb_boot_files(d):
