@@ -87,6 +87,8 @@ def make_dtb_boot_files(d):
     def transform(dtb):
         base = os.path.basename(dtb)
         if dtb.endswith('dtb'):
+            if dtb.startswith('overlays/'):
+                return '{};{}'.format(base, dtb)
             # eg: whatever/bcm2708-rpi-b.dtb has:
             #     DEPLOYDIR file: bcm2708-rpi-b.dtb
             #     destination: bcm2708-rpi-b.dtb
