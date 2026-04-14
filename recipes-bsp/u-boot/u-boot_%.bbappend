@@ -42,7 +42,7 @@ UBOOT_RPI5_SUPPORT_PATCHES = " \
 SRC_URI:append:raspberrypi4 = "${UBOOT_RPI4_SUPPORT_PATCHES}"
 SRC_URI:append:raspberrypi5 = "${UBOOT_RPI5_SUPPORT_PATCHES}"
 
-# Also build a specfic qemu-u-boot.bin
+# Also build a specific qemu-u-boot.bin
 
 do_configure:append:rpi() {
     rm -rf ${B}-qemu
@@ -61,6 +61,6 @@ do_deploy:append:rpi() {
     cd ${DEPLOYDIR}
     rm -f qemu-${UBOOT_BINARY} qemu-${UBOOT_SYMLINK}
     ln -sf qemu-${UBOOT_IMAGE} qemu-${UBOOT_SYMLINK}
-    ln -sf qemu-${UBOOT_IMAGE} qmeu-${UBOOT_BINARY}
+    ln -sf qemu-${UBOOT_IMAGE} qemu-${UBOOT_BINARY}
     cd $ocwd
 }
