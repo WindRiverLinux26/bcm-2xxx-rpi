@@ -18,12 +18,14 @@ This BSP supports the following boards:
   + Raspberry Pi 4 Model B: BCM2711 rev1.1, with 4G DDR memory
   + Raspberry Pi 4 Model B: BCM2711 rev1.2, with 4G DDR memory
   + Raspberry Pi 4 Model B: BCM2711 rev1.4, with 8G DDR memory
+  + Raspberry Pi 5 Model B: BCM2712 rev1.0, with 8G DDR memory
+  + Raspberry Pi 5 Model B: BCM2712 rev1.1, with 16G DDR memory
 
 
 2. Change History
 =================
 
-  - 2025/06 (LINUXEXEC-34928): WindRiver CI/CD branch, support Raspberry Pi 4 Model B board.
+  - 2026/04 (LINUXEXEC-37608): WindRiver LTS26 branch, support Raspberry Pi 5 Model B board.
 
 3. BSP Features
 ===============
@@ -104,4 +106,4 @@ in a different environment it may possibly have some issues.
 	Processor:              BCM2712 (Cortex-A76)
 	BootLoader:		Raspberry bootloader/GPU firmware and U-Boot
 	BootLoader Version:	RPi: BOOTSYS release VERSION:2bb2ae64 DATE: 2025/03/10 TIME: 17:10:37
-				U-Boot 2025.01-g6d41f0a39d64-dirty (Jan 07 2025 - 00:54:44 +0000)
+				U-Boot 2026.01 (Jan 05 2026 - 20:49:22 +0000)

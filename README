@@ -26,7 +26,7 @@ when using the Wind River setup.sh wrapper.
 
 License
 -------
-Copyright (C) 2025 Wind River Systems, Inc.
+Copyright (C) 2026 Wind River Systems, Inc.
 
 Source code included in the tree for individual recipes is under the LICENSE
 stated in the associated recipe (.bb file) unless otherwise stated.
@@ -91,7 +91,14 @@ To generate the DTB manually, change to the build directory, then run
 the following commands:
 
 	% bitbake -c devshell virtual/kernel
-	% make broadcom\bcm2711-rpi-4-b.dtb
+
+for Raspberrypi4
+
+	% make broadcom/bcm2711-rpi-4-b.dtb
+
+for Raspberrypi5
+
+	% make broadcom/bcm2712-rpi-5-b.dtb
 
 The dtb can then be found in the
   .../linux-<bsp_name>-<kernel type>-build/arch/arm64/boot/dts/broadcom
@@ -209,13 +216,13 @@ Note that wrlinux does not include this firmware by default.
       linux-firmware-rpidistro-bcm43455 \
   "
 
-Execute the following commands to validate the WIFI eature:
+Execute the following commands to validate the WIFI feature:
 
-	# ifconfig wlan<idx> up
-	# iw wlan<idx> scan
-	# iw dev wlan<idx> connect <AP essid>
-	# dhclient wlan<idx>
-	# ping <AP address> -i wlan<idx> -c 5
+	# ifconfig wld<idx> up
+	# iw wld<idx> scan
+	# iw dev wld<idx> connect <AP essid>
+	# dhclient wld<idx>
+	# ping <AP address> -i wld<idx> -c 5
 
 6. Bluetooth
 ============
@@ -261,7 +268,13 @@ This BSP supports disk images for SD card.
 After build the project, user will get a WIC image under the directory
 tmp-glibc/deploy/images/<bsp name>/, such as:
 
-tmp-glibc/deploy/images/bcm-2xxx-rpi4/wrlinux-image-std-bcm-2xxx-rpi4.wic
+for Raspberrypi4
+
+	tmp-glibc/deploy/images/bcm-2xxx-rpi4/wrlinux-image-std-bcm-2xxx-rpi4.wic
+
+for Raspberrypi5
+
+	tmp-glibc/deploy/images/bcm-2xxx-rpi5/wrlinux-image-std-bcm-2xxx-rpi5.wic
 
 7.1 Run wic image
 -----------------
@@ -341,9 +354,7 @@ manually set the overlay, for example:
     dtoverlay=imx219,cam1
     dtoverlay=ov5647,cam0
 
-cam -l
-
-cam --camera 1 --stream width=640,height=480,pixelformat=SBGGR12 --capture=20 --file=picture.raw
+rpicam-jpeg --output test.jpg
 
 10. SPI and I2C
 ===============
