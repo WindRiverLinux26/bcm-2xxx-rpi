@@ -26,6 +26,7 @@ This BSP supports the following boards:
 =================
 
   - 2026/04 (LINUXEXEC-37608): WindRiver LTS26 branch, support Raspberry Pi 5 Model B board.
+  - 2026/04 (LINUXEXEC-38360): WindRiver LTS26 branch, support Raspberry Pi 4 Model B board.
 
 3. BSP Features
 ===============
@@ -100,8 +101,8 @@ in a different environment it may possibly have some issues.
 
 	Processor:              BCM2711 (Cortex-A72)
 	BootLoader:             Raspberry bootloader/GPU firmware and U-Boot
-	BootLoader Version:     Raspberrypi firmware Release version "20240229"
-				U-Boot 2025.01 (Jan 07 2025 - 00:54:44 +0000)
+	BootLoader Version:     Raspberrypi firmware Release version "20250801"
+				U-Boot 2026.01 (Jan 05 2026 - 20:49:22 +0000)
 
 	Processor:              BCM2712 (Cortex-A76)
 	BootLoader:		Raspberry bootloader/GPU firmware and U-Boot
