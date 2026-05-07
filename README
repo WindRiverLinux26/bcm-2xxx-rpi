@@ -75,7 +75,7 @@ Note: The preempt-rt kernel type can be used with this BSP/Machine.
 To get a list of patches applied to the kernel specific to this BSP along with
 patch descriptions use git-whatchanged on the default kernel. For example:
 
-	%> cd tmp-glibc/work-shared/<bsp_name>/kernel-source
+	%> cd tmp/work-shared/<bsp_name>/kernel-source
 	%> git whatchanged <kernel_version>/standard/base..<kernel_version>/standard/<bsp_name>
 
 
@@ -146,7 +146,7 @@ of 0x1000000 was used with success for all kernels tested by Wind River.
 
 4.1.1 Prepare Kernel, DTB, NFS and TFTP servers
 -----------------------------------------------
-The files in below example can be found in <buildprj>/tmp-glibc/deploy/images/<machine name>
+The files in below example can be found in <buildprj>/tmp/deploy/images/<machine name>
 and are copied to the directory of the TFTP server.
 
 4.1.2 Set environments for booting image from network
@@ -266,15 +266,15 @@ https://docs.yoctoproject.org/singleindex.html#creating-partitioned-images-using
 
 This BSP supports disk images for SD card.
 After build the project, user will get a WIC image under the directory
-tmp-glibc/deploy/images/<bsp name>/, such as:
+tmp/deploy/images/<bsp name>/, such as:
 
 for Raspberrypi4
 
-	tmp-glibc/deploy/images/bcm-2xxx-rpi4/wrlinux-image-std-bcm-2xxx-rpi4.wic
+	tmp/deploy/images/bcm-2xxx-rpi4/wrlinux-image-std-bcm-2xxx-rpi4.wic
 
 for Raspberrypi5
 
-	tmp-glibc/deploy/images/bcm-2xxx-rpi5/wrlinux-image-std-bcm-2xxx-rpi5.wic
+	tmp/deploy/images/bcm-2xxx-rpi5/wrlinux-image-std-bcm-2xxx-rpi5.wic
 
 7.1 Run wic image
 -----------------
