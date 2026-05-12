@@ -26,23 +26,7 @@ Index: git/config.txt
  
  ## framebuffer_ignore_alpha
  ##     Set to 1 to disable alpha channel. Helps with 32bit.
-@@ -769,6 +769,7 @@
- ##     Default 0
- ##
- #start_x=0
-+start_x=1
- 
- ## disable_camera_led
- ##     Turn off the red camera led when recording video or taking a still
-@@ -791,6 +792,7 @@
- ##     Default 64
- ##
- #gpu_mem=128
-+gpu_mem=128
- 
- ## gpu_mem_256
- ##     GPU memory allocation in MB for 256MB board revision.
-@@ -1344,6 +1346,7 @@
+@@ -1344,6 +1344,7 @@
  ##     Default off.
  ##
  #dtparam=audio=off
@@ -50,7 +34,7 @@ Index: git/config.txt
  
  ## i2c_arm
  ##     Enable the ARM's i2c interface
-@@ -1478,3 +1481,19 @@
+@@ -1468,3 +1479,21 @@
  ##     Information can be found in overlays/README
  ##
  #dtoverlay=act-led,activelow=off
@@ -70,3 +54,5 @@ Index: git/config.txt
 +
 +# Force arm in 64bit mode. See: https://github.com/raspberrypi/firmware/issues/1193.
 +arm_64bit=1
++
++camera_auto_detect=1

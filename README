@@ -328,33 +328,22 @@ automatic.
 9. Video camera
 ===============
 
-The Video camera support on RPI 4 is with V4L2 drivers. To enable the video
-device, the config.txt should contain:
+To enable the video device, the config.txt should contain:
 
-	start_x=1
-	gpu_mem=128
-
-gpu_mem could select others value like 256 or 512.
-
-For Raspberrypi4
-----------------
+    camera_auto_detect=1
 
 To run camera test case with below commands:
 # export DISPLAY=:0
-# gst-launch-1.0 v4l2src device=/dev/video0 ! video/x-raw,format=YUY2,width=320,height=240 ! videoconvert ! autovideosink
-
-For Raspberrypi5
-----------------
+# gst-launch-1.0 libcamerasrc ! video/x-raw,width=320,height=240 ! videoconvert ! autovideosink
 
 Note:
 'camera_auto_detect=1' only applies to cameras sold by RPI.
-It does not recognize other third-party cameras; we need to
-manually set the overlay, for example:
+Some other third-party cameras can not be detected automatically
+due to pin ordering or other issues; we need to manually replace it with
+the overlay, for example:
 
     dtoverlay=imx219,cam1
     dtoverlay=ov5647,cam0
-
-rpicam-jpeg --output test.jpg
 
 10. SPI and I2C
 ===============
