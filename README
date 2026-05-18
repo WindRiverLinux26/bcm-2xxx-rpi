@@ -160,36 +160,32 @@ and are copied to the directory of the TFTP server.
 4.1.3 Download kernel
 ---------------------
 
-	# tftp 0x00080000 Image
+	# tftp ${kernel_addr_r} Image
 
-Note:
-For Raspberrypi4, there is not network in u-boot, so load kernel from SD card
-	# fatload mmc 0:1 ${kernel_addr_r} Image
-
-4.1.3 Download dtb
+4.1.4 Download dtb
 ------------------
+The Raspberrypi special bootloader modifies the dtb file on SD card for both Raspberrypi4 and Raspberrypi5
+after board power on, and then put the dtb at address ${fdt_addr}. Make sure that the dtb on the SD
+card and the boot kernel are from the same build.
 
-	# tftp 0x02600000 <Board Name>.dtb
-
-Note:
-For Raspberrypi4, there is no need to load dtb file. Because Raspberrypi special boorloader modify dtb file
-on SD card after board power on, and then put the dtb at address 0x2eff5c00
-
-4.1.4 Set bootargs and boot system
-----------------------------------
-
-	# setenv bootargs console=ttyS0,115200n8 root=/dev/nfs rw nfsroot=<nfs server>:<nfs root> \
-		 ip=<target IP>::<gateway>:<netmask>::eth0:off \
-	# booti 0x00080000 - 0x02600000
-
-Note:
-For Raspberrypi4, please use below commands
 	# fdt addr ${fdt_addr}
 	# fdt resize
 	# fdt get value bootargs1 /chosen bootargs
+
+For Raspberrypi5, the dtb can be downloaded from tftp.
+
+	# tftp ${fdt_addr_r} <Board Name>.dtb
+
+4.1.5 Set bootargs and boot system
+----------------------------------
+
 	# setenv bootargs "${bootargs1} root=/dev/nfs nfsroot=<nfs server>:<nfs root> ip=dhcp"
 	# booti ${kernel_addr_r} - ${fdt_addr}
 
+Note:
+For Raspberrypi5 with dtb loaded from tftp, please use the below commands
+	# setenv bootargs "console=ttyAMA10,115200 root=/dev/nfs nfsroot=<nfs server>:<nfs root> ip=dhcp"
+	# booti ${kernel_addr_r} - ${fdt_addr_r}
 
 5. WiFi
 =======
@@ -199,13 +195,10 @@ For Raspberrypi4, please use below commands
 To use this WiFi driver, you will need a microcode (uCode) image.
 The microcode is typically installed in /lib/firmware/brcm.
 
-5.2 Usage and verification
---------------------------
-
 For Raspberrypi5
 ----------------
 
-The bcm43455 RaspberryPi5 firmware is provided by the linux-firmware-rpidistro
+The bcm43455 Raspberrypi5 firmware is provided by the linux-firmware-rpidistro
 package. As this firmware is governed by a third-party license, please ensure
 you add the following configuration steps to your local.conf file.
 Note that wrlinux does not include this firmware by default.
@@ -216,7 +209,11 @@ Note that wrlinux does not include this firmware by default.
       linux-firmware-rpidistro-bcm43455 \
   "
 
-Execute the following commands to validate the WIFI feature:
+5.2 Usage and verification
+--------------------------
+
+Execute the following commands to validate the WIFI feature on raspberrypi5;
+replace wld with wlan for raspberrypi4:
 
 	# ifconfig wld<idx> up
 	# iw wld<idx> scan
@@ -290,31 +287,30 @@ To enable the audio device, the config.txt should contain 'dtparam=audio=on'.
 To load audio driver in WRLinux:
 $ sudo modprobe snd-bcm2835
 
-8.1 Audio playback(headphone)
------------------------------
+8.1 Usage and verification
+--------------------------
 
-Verify with below command
+1) List the available playback devices.
 
-	# speaker-test -c2 -twav
+	# aplay -l
+	**** List of PLAYBACK Hardware Devices ****
+	card 0: vc4hdmi0 [vc4-hdmi-0], device 0: MAI PCM i2s-hifi-0 [MAI PCM i2s-hifi-0]
+	  Subdevices: 1/1
+	  Subdevice #0: subdevice #0
+	card 1: vc4hdmi1 [vc4-hdmi-1], device 0: MAI PCM i2s-hifi-0 [MAI PCM i2s-hifi-0]
+	  Subdevices: 1/2
+	  Subdevice #0: subdevice #0
+	card 2: Headphones [bcm2835 Headphones], device 0: bcm2835 Headphones [bcm2835 Headphones]
+	  Subdevices: 8/8
+	  Subdevice #0: subdevice #0
 
-8.2 Audio playback(HDMI)
-------------------------
+2) Play the audio file.
 
-For Raspberrypi4
-----------------
+    Play audio on headphone:
+    # aplay -Dplughw:2,0 Noise.wav
 
-Verify with below command
-
-	# speaker-test -c2 -twav -Dhw:0,1
-
-For Raspberrypi5
-----------------
-
-	speaker-test -c2  -Dhdmi:CARD=vc4hdmi{number},DEV=0
-
-Note: If you are using aplay to play a WAV file, please add -f IEC958_SUBFRAME_LE, for example:
-
-	aplay -f IEC958_SUBFRAME_LE Noise.wav
+    Play audio on vc4hdmi0:
+    # aplay -Dplughw:0,0 Noise.wav
 
 Note:
 The following command is used to switch the audio output
@@ -415,10 +411,15 @@ Output as below:
 	300 frames in 5.0 seconds = 59.952 FPS
 	300 frames in 5.0 seconds = 59.952 FPS
 
+Note:
+By default, when connected to a 4K monitor, certain models select a 30Hz refresh rate. Add
+hdmi_enable_4kp60=1 in config.txt to enable 60Hz refresh rates. Enabling this setting increases
+power consumption and temperature.
+
 12. LCD
 =======
 
-Raspberrypi4 B platform supports below 2 kinds of LCD Display and capacitive touch control.
+The Raspberrypi platform supports the below 2 kinds of LCD Display and capacitive touch control.
  - 7 inch HDMI LCD Display-B with resolution 800x480
  - 7 inch HDMI LCD Display-C with resolution 1024x600
 To enable LCD feature, it needs to add below configuration parameter in config.txt file.
