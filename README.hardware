@@ -76,6 +76,7 @@ the corresponding h/w features exist.
 		Framing errors detection & Parity bit & DCD, DSR, DTR or RI
 		signals.
 	+ Bluetooth: Bluetooth 5.0, BLE (multiplexing with UART pl011)
+	+ RTC: On-Chip RTC (Raspberry Pi5)
 	+ Watchdog: On-Chip H/W Watchdog
 
 3.2 Unsupported Features
