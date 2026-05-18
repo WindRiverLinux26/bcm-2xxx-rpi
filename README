@@ -334,7 +334,7 @@ To enable the video device, the config.txt should contain:
 
 To run camera test case with below commands:
 # export DISPLAY=:0
-# gst-launch-1.0 libcamerasrc ! video/x-raw,width=320,height=240 ! videoconvert ! autovideosink
+# gst-launch-1.0 libcamerasrc ! video/x-raw,format=YUY2,width=320,height=240 ! videoconvert ! autovideosink
 
 Note:
 'camera_auto_detect=1' only applies to cameras sold by RPI.
