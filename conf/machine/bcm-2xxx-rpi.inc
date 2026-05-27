@@ -142,6 +142,7 @@ NON_MULTILIB_RECIPES:append = " rpi-u-boot-scr"
 IMAGE_BOOT_FILES ?= " bcm2835-bootfiles/* \
                 Image ${@make_dtb_boot_files(d)} \
                 u-boot.bin;${SDIMG_KERNELIMAGE} boot.scr \
+                overlays-README;overlays/README \
 "
 
 BOOTFILES_DIR_NAME ?= "bcm2835-bootfiles"

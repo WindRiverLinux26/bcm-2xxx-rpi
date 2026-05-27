@@ -187,6 +187,16 @@ For Raspberrypi5 with dtb loaded from tftp, please use the below commands
 	# setenv bootargs "console=ttyAMA10,115200 root=/dev/nfs nfsroot=<nfs server>:<nfs root> ip=dhcp"
 	# booti ${kernel_addr_r} - ${fdt_addr_r}
 
+	For D0 stepping board (Rev 1.1), the bcm2712d0.dtbo overlay must be
+	applied. D0 has a different pinctrl register layout from C0, and without this
+	overlay the kernel will panic on boot. Apply it before booting:
+
+	# setexpr overlay_addr ${fdt_addr_r} + 0x100000
+	# tftp ${overlay_addr} <path>/bcm2712d0.dtbo
+	# fdt addr ${fdt_addr_r}
+	# fdt resize 8192
+	# fdt apply ${overlay_addr}
+
 5. WiFi
 =======
 

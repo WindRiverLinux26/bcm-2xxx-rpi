@@ -1,4 +1,8 @@
 do_deploy:append:rpi() {
+    # Deploy overlays/README required by RPi5 EEPROM bootloader for auto-applying
+    # board-specific overlays (e.g. bcm2712d0.dtbo for D0 stepping)
+    install -m 0644 ${S}/overlays/README ${DEPLOYDIR}/overlays-README
+
     # Add LICENSE file with disclaimer
     (cd ${S} ; ls -C -w 80 *.bin *.dat *.elf) > ${DEPLOYDIR}/${BOOTFILES_DIR_NAME}/LICENSE.broadcom
     cat<<EOF>> ${DEPLOYDIR}/${BOOTFILES_DIR_NAME}/LICENSE.broadcom
