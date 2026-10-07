@@ -105,7 +105,7 @@ The dtb can then be found in the
 directory.
 
 Typical u-boot settings apply to these boards. You will need to use
-setenv, printenv and saveenv, to configure, display and store your network 
+setenv, printenv and saveenv, to configure, display and store your network
 configuration details and kernel command line respectively. In order to
 TFTP a kernel, you need, minimally, to set the following:
 
@@ -118,6 +118,9 @@ TFTP a kernel, you need, minimally, to set the following:
 	- dtbaddr
 	- ethaddr
 	- eth1addr
+
+U-Boot will auto-boot after 2 seconds. To prevent auto-boot, hit Enter within
+those 2 seconds. You will then be presented with the "U-Boot>" prompt.
 
 Your board may ship with the values for the MAC address of
 the Ethernet interfaces set to the defaults compiled into the
@@ -136,10 +139,16 @@ settings.  Since these macros exist as env variables themselves, they
 may or may not be present depending on who installed and configured
 u-boot for the board.
 
-The console device for the board is ttyS0 at 115200 baud. For the DTB
-address, 0x3000000 has been used with success by Wind River. The load address
-must be high enough to not interfere with kernel decompression. A value
-of 0x1000000 was used with success for all kernels tested by Wind River.
+The console device for the Raspberrypi 4 is ttyS0, for the Raspberrypi 5 it
+is ttyAMA10, both operating at 115200 baud. Serial I/O on the Raspberrypi 4
+is from the 40-pin header (pins 8 and 10), but on the Raspberrypi 5 it is
+via the debug connection located between the two micro-HDMI connectors. A
+Raspberrypi Debug Probe can be used for this connection.
+
+For the DTB address, 0x3000000 has been used with success by Wind River. The
+load address must be high enough to not interfere with kernel decompression.
+A value of 0x1000000 was used with success for all kernels tested by
+Wind River.
 
 4.1 NFS Root File System
 ------------------------
@@ -228,7 +237,7 @@ replace wld with wlan for raspberrypi4:
 	# ifconfig wld<idx> up
 	# iw wld<idx> scan
 	# iw dev wld<idx> connect <AP essid>
-	# dhclient wld<idx>
+	# dhcpcd wld<idx>
 	# ping <AP address> -i wld<idx> -c 5
 
 6. Bluetooth
@@ -283,6 +292,16 @@ for Raspberrypi5
 
 	tmp/deploy/images/bcm-2xxx-rpi5/wrlinux-image-std-bcm-2xxx-rpi5.wic
 
+The wic image can be written to a microSD card using the 'dd' command:
+
+	dd if=wrlinux-image-std-bcm-2xxx-rpiX.wic of=/dev/sdY status=progress
+
+Replace 'rpiX' with 'rpi4' or 'rpi5' as needed, and 'sdY' with the correct
+device name for the SD card on your host machine.
+
+NOTE: Be sure to use the correct sdY value for the SD card to prevent over-
+writing a system disk.
+
 7.1 Run wic image
 -----------------
 
@@ -313,6 +332,9 @@ $ sudo modprobe snd-bcm2835
 	card 2: Headphones [bcm2835 Headphones], device 0: bcm2835 Headphones [bcm2835 Headphones]
 	  Subdevices: 8/8
 	  Subdevice #0: subdevice #0
+
+The default audio output on the Raspberrypi 4 is the headphone socket. The
+Raspberrypi 5 has no headphone socket and defaults to the micro-HDMI outputs.
 
 2) Play the audio file.
 
